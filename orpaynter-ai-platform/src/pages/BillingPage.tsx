@@ -308,4 +308,4 @@ const BillingPage: React.FC = () => {
   );
 };
 
-export default B
+export default BillingPage;

@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { NavItem } from '../types';
+import { NotificationCenter } from './NotificationCenter';
 
 type UserRole = 'homeowner' | 'contractor' | 'insurance' | 'supplier';
+
+interface NavItem {
+  label: string;
+  href: string;
+  icon?: string;
+  roles?: UserRole[];
+  children?: NavItem[];
+}
+
 import { 
   HomeIcon, 
   ClipboardDocumentListIcon, 
@@ -12,7 +21,6 @@ import {
   QuestionMarkCircleIcon,
   Bars3Icon,
   XMarkIcon,
-  BellIcon,
   ChevronDownIcon
 } from '@heroicons/react/24/outline';
 
@@ -164,10 +172,7 @@ export function Layout({ children }: LayoutProps) {
 
             <div className="flex items-center space-x-4">
               {/* Notifications */}
-              <button className="text-gray-400 hover:text-white relative">
-                <BellIcon className="h-6 w-6" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-              </button>
+              <NotificationCenter />
 
               {/* Profile dropdown */}
               <div className="relative">

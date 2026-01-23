@@ -16,45 +16,52 @@ import {
   MapPinIcon,
   StarIcon
 } from '@heroicons/react/24/outline';
-import { Project, Lead } from '../types';
+import { useProjects } from '../hooks/useProjects';
+import { useAuth } from '../hooks/useAuth';
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  status: 'planning' | 'in_progress' | 'completed' | 'on_hold';
+  priority: 'low' | 'medium' | 'high';
+  budget: number;
+  startDate: Date;
+  endDate?: Date;
+  contractorId?: string;
+  homeownerId: string;
+  address: string;
+  images: string[];
+  documents: string[];
+  milestones: any[];
+}
+
+interface Lead {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  projectType: string;
+  budget: number;
+  location: string;
+  status: 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'won' | 'lost';
+  source: string;
+  createdAt: Date;
+  notes?: string;
+}
 
 export function ContractorDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'leads' | 'analytics'>('overview');
 
-  // Mock data
-  const activeProjects: Project[] = [
-    {
-      id: '1',
-      title: 'Residential Roof Replacement - Oak Street',
-      description: 'Complete roof replacement with architectural shingles',
-      status: 'in_progress',
-      priority: 'high',
-      createdAt: new Date('2024-01-10'),
-      updatedAt: new Date('2024-01-20'),
-      assignedTo: 'contractor-1',
-      estimatedCost: 15000,
-      actualCost: 8500,
-      completionPercentage: 65,
-      clientName: 'John Smith',
-      clientEmail: 'john@example.com',
-      clientPhone: '(555) 123-4567'
-    },
-    {
-      id: '2',
-      title: 'Commercial Roof Repair - Main Plaza',
-      description: 'Emergency leak repair and preventive maintenance',
-      status: 'pending',
-      priority: 'urgent',
-      createdAt: new Date('2024-01-22'),
-      updatedAt: new Date('2024-01-22'),
-      assignedTo: 'contractor-1',
-      estimatedCost: 8500,
-      clientName: 'ABC Corporation',
-      clientEmail: 'facilities@abc.com',
-      clientPhone: '(555) 987-6543'
-    }
-  ];
-
+  // Fetch real data from Supabase
+  const { projects, loading: projectsLoading } = useProjects();
+  const { user } = useAuth();
+  
+  // Filter projects for contractor
+  const activeProjects = projects?.filter(p => 
+    p.status === 'in_progress' || p.status === 'planning'
+  ) || [];
+  
+  // Mock leads data (would be replaced with real leads service)
   const newLeads: Lead[] = [
     {
       id: '1',
@@ -87,9 +94,9 @@ export function ContractorDashboard() {
   ];
 
   const stats = {
-    activeProjects: 8,
-    newLeads: 12,
-    monthlyRevenue: 45000,
+    activeProjects: activeProjects.length,
+    newLeads: newLeads.length,
+    monthlyRevenue: projects?.reduce((sum, p) => sum + (p.actual_cost || 0), 0) || 0,
     completionRate: 94
   };
 

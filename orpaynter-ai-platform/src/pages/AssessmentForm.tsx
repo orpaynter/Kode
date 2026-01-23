@@ -7,9 +7,19 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
-import { FormData } from '../types';
-
+import { useAuth } from '../hooks/useAuth';
+import { supabaseDataService } from '../services/supabaseData';
 type UserRole = 'homeowner' | 'contractor' | 'insurance' | 'supplier';
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  role: UserRole;
+  address: string;
+  images: File[];
+  notes?: string;
+}
 
 export function AssessmentForm() {
   const navigate = useNavigate();
@@ -119,24 +129,56 @@ export function AssessmentForm() {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setSubmitSuccess(true);
-      
-      // Redirect after success
-      setTimeout(() => {
-        navigate('/register', { 
-          state: { 
-            email: formData.email,
-            name: formData.name,
-            phone: formData.phone,
-            role: formData.role
+      // Upload images to Supabase storage
+      const imageUrls: string[] = [];
+      for (const image of formData.images) {
+        try {
+          const imageUrl = await supabaseDataService.uploadFile(image, 'roof-images');
+          if (imageUrl) {
+            imageUrls.push(imageUrl);
           }
-        });
-      }, 2000);
+        } catch (uploadError) {
+          console.error('Failed to upload image:', uploadError);
+        }
+      }
+
+      // Create assessment record
+      const assessmentData = {
+        property_address: formData.address,
+        contact_name: formData.name,
+        contact_email: formData.email,
+        contact_phone: formData.phone,
+        user_role: formData.role,
+        roof_images: imageUrls,
+        notes: formData.notes || null,
+        damage_level: 'pending', // Will be updated by AI analysis
+        estimated_cost: 0, // Will be updated by AI analysis
+        status: 'submitted'
+      };
+
+      const assessment = await supabaseDataService.createAssessment(assessmentData);
+      
+      if (assessment) {
+        setSubmitSuccess(true);
+        
+        // Redirect after success
+        setTimeout(() => {
+          navigate('/register', { 
+            state: { 
+              email: formData.email,
+              name: formData.name,
+              phone: formData.phone,
+              role: formData.role,
+              assessmentId: assessment.id
+            }
+          });
+        }, 2000);
+      } else {
+        throw new Error('Failed to create assessment');
+      }
     } catch (error) {
       console.error('Assessment submission failed:', error);
+      setErrors({ submit: 'Failed to submit assessment. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -410,6 +452,15 @@ export function AssessmentForm() {
 
           {/* Submit Button */}
           <div className="text-center">
+            {errors.submit && (
+              <div className="mb-4 p-4 bg-red-500 bg-opacity-10 border border-red-500 rounded-lg">
+                <p className="text-red-400 flex items-center">
+                  <ExclamationTriangleIcon className="h-5 w-5 mr-2" />
+                  {errors.submit}
+                </p>
+              </div>
+            )}
+            
             <button
               type="submit"
               disabled={isSubmitting}

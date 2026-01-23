@@ -8,7 +8,12 @@ import {
   ShieldCheckIcon,
   ClockIcon
 } from '@heroicons/react/24/outline';
-import { TrustMetrics } from '../types';
+interface TrustMetrics {
+  accuracy_percentage: number;
+  revenue_impact: string;
+  total_scans: number;
+  customer_satisfaction: number;
+}
 
 export function HomePage() {
   const trustMetrics: TrustMetrics = {

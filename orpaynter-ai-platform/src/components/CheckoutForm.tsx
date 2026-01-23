@@ -162,4 +162,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           </div>
         </div>
       </div>
-    </div
+    </div>
+  );
+};
+
+export default CheckoutForm;

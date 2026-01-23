@@ -10,6 +10,8 @@ import { HomePage } from './pages/HomePage';
 import { AssessmentForm } from './pages/AssessmentForm';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { HomeownerDashboard } from './pages/HomeownerDashboard';
 import { ContractorDashboard } from './pages/ContractorDashboard';
 import { InsuranceDashboard } from './pages/InsuranceDashboard';
@@ -25,6 +27,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { SupportPage } from './pages/SupportPage';
 import { ComingSoonPage } from './pages/ComingSoonPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { TestPage } from './pages/TestPage';
 
 function App() {
   return (
@@ -38,6 +41,8 @@ function App() {
             <Route path="/assessment" element={<AssessmentForm />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             
             {/* Protected Routes with Layout */}
             <Route path="/dashboard" element={
@@ -106,6 +111,9 @@ function App() {
             <Route path="/analytics" element={<ComingSoonPage feature="Advanced Analytics" />} />
             <Route path="/reports" element={<ComingSoonPage feature="Custom Reports" />} />
             <Route path="/integrations" element={<ComingSoonPage feature="Third-party Integrations" />} />
+            
+            {/* Test Route */}
+            <Route path="/test" element={<TestPage />} />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFoundPage />} />

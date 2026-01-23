@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useProjects } from '../hooks/useProjects';
+import { useAuth } from '../hooks/useAuth';
 import {
   HomeIcon,
   BuildingOfficeIcon,
@@ -21,7 +23,7 @@ import {
   PhotoIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';
-import { Project } from '../types';
+// Project interface is now imported from the hooks
 
 export function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,112 +31,55 @@ export function ProjectsPage() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('created_date');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  
+  const { user } = useAuth();
+  const { projects, loading: projectsLoading, error } = useProjects();
 
-  // Mock projects data
-  const projects: Project[] = [
-    {
-      id: 'PRJ-001',
-      title: 'Residential Roof Replacement',
-      description: 'Complete roof replacement for storm damage on single-family home',
-      type: 'roofing',
-      status: 'in_progress',
-      priority: 'high',
-      homeownerId: 'HO-001',
-      homeownerName: 'John Smith',
-      contractorId: 'CON-001',
-      contractorName: 'ABC Roofing Co.',
-      propertyAddress: '123 Main St, Anytown, ST 12345',
-      estimatedCost: 15000,
-      actualCost: 14500,
-      startDate: new Date('2024-01-15'),
-      estimatedCompletion: new Date('2024-02-15'),
-      createdAt: new Date('2024-01-10'),
-      updatedAt: new Date('2024-01-22'),
-      progress: 65,
-      images: [],
-      documents: [],
-      milestones: [
-        { id: '1', title: 'Material Delivery', completed: true, date: new Date('2024-01-18') },
-        { id: '2', title: 'Tear-off Complete', completed: true, date: new Date('2024-01-20') },
-        { id: '3', title: 'New Roof Installation', completed: false, date: new Date('2024-01-25') },
-        { id: '4', title: 'Final Inspection', completed: false, date: new Date('2024-02-10') }
-      ]
-    },
-    {
-      id: 'PRJ-002',
-      title: 'Commercial Building Restoration',
-      description: 'Water damage restoration and repairs for office building',
-      type: 'restoration',
-      status: 'planning',
-      priority: 'medium',
-      homeownerId: 'HO-002',
-      homeownerName: 'Elite Properties LLC',
-      contractorId: 'CON-002',
-      contractorName: 'RestorePro Services',
-      propertyAddress: '456 Business Ave, Commerce City, ST 67890',
-      estimatedCost: 45000,
-      startDate: new Date('2024-02-01'),
-      estimatedCompletion: new Date('2024-03-15'),
-      createdAt: new Date('2024-01-20'),
-      updatedAt: new Date('2024-01-22'),
-      progress: 10,
-      images: [],
-      documents: [],
-      milestones: [
-        { id: '1', title: 'Assessment Complete', completed: true, date: new Date('2024-01-22') },
-        { id: '2', title: 'Insurance Approval', completed: false, date: new Date('2024-01-30') },
-        { id: '3', title: 'Material Procurement', completed: false, date: new Date('2024-02-05') },
-        { id: '4', title: 'Restoration Work', completed: false, date: new Date('2024-02-10') }
-      ]
-    },
-    {
-      id: 'PRJ-003',
-      title: 'Siding Repair & Paint',
-      description: 'Hail damage repair and exterior painting',
-      type: 'siding',
-      status: 'completed',
-      priority: 'low',
-      homeownerId: 'HO-003',
-      homeownerName: 'Mike Wilson',
-      contractorId: 'CON-003',
-      contractorName: 'Perfect Paint & Siding',
-      propertyAddress: '789 Oak Street, Suburbia, ST 54321',
-      estimatedCost: 8500,
-      actualCost: 8200,
-      startDate: new Date('2023-12-01'),
-      estimatedCompletion: new Date('2023-12-20'),
-      completedAt: new Date('2023-12-18'),
-      createdAt: new Date('2023-11-25'),
-      updatedAt: new Date('2023-12-18'),
-      progress: 100,
-      images: [],
-      documents: [],
-      milestones: [
-        { id: '1', title: 'Damage Assessment', completed: true, date: new Date('2023-11-28') },
-        { id: '2', title: 'Material Delivery', completed: true, date: new Date('2023-12-03') },
-        { id: '3', title: 'Siding Repair', completed: true, date: new Date('2023-12-10') },
-        { id: '4', title: 'Painting Complete', completed: true, date: new Date('2023-12-18') }
-      ]
-    },
-    {
-      id: 'PRJ-004',
-      title: 'Emergency Roof Tarp',
-      description: 'Emergency tarp installation after storm damage',
-      type: 'emergency',
-      status: 'on_hold',
-      priority: 'urgent',
-      homeownerId: 'HO-004',
-      homeownerName: 'Sarah Johnson',
-      propertyAddress: '321 Pine Ave, Stormville, ST 98765',
-      estimatedCost: 2500,
-      createdAt: new Date('2024-01-23'),
-      updatedAt: new Date('2024-01-23'),
-      progress: 0,
-      images: [],
-      documents: [],
-      milestones: []
-    }
-  ];
+  // Show loading state
+  if (projectsLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Projects</h1>
+            <p className="text-gray-400 mt-1">
+              Manage and track all construction and restoration projects
+            </p>
+          </div>
+        </div>
+        <div className="bg-dark-secondary rounded-xl p-12 border border-gray-700 text-center">
+          <div className="animate-pulse">
+            <div className="h-16 w-16 bg-gray-600 rounded-full mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-600 rounded mx-auto mb-2 w-48"></div>
+            <div className="h-4 bg-gray-600 rounded mx-auto w-64"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Projects</h1>
+            <p className="text-gray-400 mt-1">
+              Manage and track all construction and restoration projects
+            </p>
+          </div>
+        </div>
+        <div className="bg-dark-secondary rounded-xl p-12 border border-gray-700 text-center">
+          <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">Error Loading Projects</h3>
+          <p className="text-gray-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const projectsList = projects || [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -200,26 +145,25 @@ export function ProjectsPage() {
     }
   };
 
-  const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.homeownerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.propertyAddress.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredProjects = projectsList.filter(project => {
+    const matchesSearch = project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.property_address?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || project.status === statusFilter;
-    const matchesType = typeFilter === 'all' || project.type === typeFilter;
+    const matchesType = typeFilter === 'all' || project.project_type === typeFilter;
     return matchesSearch && matchesStatus && matchesType;
   });
 
   const sortedProjects = [...filteredProjects].sort((a, b) => {
     switch (sortBy) {
       case 'created_date':
-        return b.createdAt.getTime() - a.createdAt.getTime();
+        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
       case 'start_date':
-        return (b.startDate?.getTime() || 0) - (a.startDate?.getTime() || 0);
+        return new Date(b.start_date || 0).getTime() - new Date(a.start_date || 0).getTime();
       case 'cost':
-        return (b.estimatedCost || 0) - (a.estimatedCost || 0);
+        return (b.estimated_cost || 0) - (a.estimated_cost || 0);
       case 'progress':
-        return (b.progress || 0) - (a.progress || 0);
+        return (b.completion_percentage || 0) - (a.completion_percentage || 0);
       case 'priority':
         const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 };
         return (priorityOrder[b.priority as keyof typeof priorityOrder] || 0) - 
@@ -309,7 +253,7 @@ export function ProjectsPage() {
           <div className="flex items-center space-x-2">
             <FunnelIcon className="h-5 w-5 text-gray-400" />
             <span className="text-gray-400 text-sm">
-              {sortedProjects.length} of {projects.length} projects
+              {sortedProjects.length} of {projectsList.length} projects
             </span>
           </div>
           <div className="flex items-center space-x-2">
@@ -350,7 +294,7 @@ export function ProjectsPage() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-accent-green bg-opacity-20 rounded-lg flex items-center justify-center">
-                    {getTypeIcon(project.type)}
+                    {getTypeIcon(project.project_type || 'roofing')}
                   </div>
                   <div>
                     <h3 className="text-white font-semibold">{project.title}</h3>
@@ -372,42 +316,38 @@ export function ProjectsPage() {
               {/* Details */}
               <div className="space-y-3 mb-4">
                 <div className="flex items-center space-x-2 text-sm">
-                  <UserIcon className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-300">{project.homeownerName}</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm">
                   <MapPinIcon className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-300 truncate">{project.propertyAddress}</span>
+                  <span className="text-gray-300 truncate">{project.property_address}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm">
                   <CurrencyDollarIcon className="h-4 w-4 text-gray-400" />
                   <span className="text-gray-300">
-                    ${project.estimatedCost?.toLocaleString()}
-                    {project.actualCost && ` (Actual: $${project.actualCost.toLocaleString()})`}
+                    ${project.estimated_cost?.toLocaleString()}
+                    {project.actual_cost && ` (Actual: $${project.actual_cost.toLocaleString()})`}
                   </span>
                 </div>
-                {project.startDate && (
+                {project.start_date && (
                   <div className="flex items-center space-x-2 text-sm">
                     <CalendarIcon className="h-4 w-4 text-gray-400" />
                     <span className="text-gray-300">
-                      {project.startDate.toLocaleDateString()}
-                      {project.estimatedCompletion && ` - ${project.estimatedCompletion.toLocaleDateString()}`}
+                      {new Date(project.start_date).toLocaleDateString()}
+                      {project.estimated_completion && ` - ${new Date(project.estimated_completion).toLocaleDateString()}`}
                     </span>
                   </div>
                 )}
               </div>
 
               {/* Progress */}
-              {project.progress !== undefined && (
+              {project.completion_percentage !== undefined && (
                 <div className="mb-4">
                   <div className="flex items-center justify-between text-sm mb-1">
                     <span className="text-gray-400">Progress</span>
-                    <span className="text-white font-medium">{project.progress}%</span>
+                    <span className="text-white font-medium">{project.completion_percentage}%</span>
                   </div>
                   <div className="w-full bg-gray-700 rounded-full h-2">
                     <div
                       className="bg-accent-green h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${project.progress}%` }}
+                      style={{ width: `${project.completion_percentage}%` }}
                     ></div>
                   </div>
                 </div>
@@ -453,7 +393,7 @@ export function ProjectsPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-accent-green bg-opacity-20 rounded-lg flex items-center justify-center">
-                          {getTypeIcon(project.type)}
+                          {getTypeIcon(project.project_type || 'roofing')}
                         </div>
                         <div>
                           <div className="text-white font-medium">{project.title}</div>
@@ -469,35 +409,34 @@ export function ProjectsPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-white">{project.homeownerName}</div>
-                      <div className="text-sm text-gray-400 truncate max-w-xs">{project.propertyAddress}</div>
+                      <div className="text-sm text-gray-400 truncate max-w-xs">{project.property_address}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-white">${project.estimatedCost?.toLocaleString()}</div>
-                      {project.actualCost && (
-                        <div className="text-sm text-gray-400">Actual: ${project.actualCost.toLocaleString()}</div>
+                      <div className="text-white">${project.estimated_cost?.toLocaleString()}</div>
+                      {project.actual_cost && (
+                        <div className="text-sm text-gray-400">Actual: ${project.actual_cost.toLocaleString()}</div>
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      {project.progress !== undefined && (
+                      {project.completion_percentage !== undefined && (
                         <div className="flex items-center space-x-2">
                           <div className="w-16 bg-gray-700 rounded-full h-2">
                             <div
                               className="bg-accent-green h-2 rounded-full"
-                              style={{ width: `${project.progress}%` }}
+                              style={{ width: `${project.completion_percentage}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm text-white">{project.progress}%</span>
+                          <span className="text-sm text-white">{project.completion_percentage}%</span>
                         </div>
                       )}
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-white">
-                        {project.startDate ? project.startDate.toLocaleDateString() : 'TBD'}
+                        {project.start_date ? new Date(project.start_date).toLocaleDateString() : 'TBD'}
                       </div>
-                      {project.estimatedCompletion && (
+                      {project.estimated_completion && (
                         <div className="text-sm text-gray-400">
-                          Est: {project.estimatedCompletion.toLocaleDateString()}
+                          Est: {new Date(project.estimated_completion).toLocaleDateString()}
                         </div>
                       )}
                     </td>

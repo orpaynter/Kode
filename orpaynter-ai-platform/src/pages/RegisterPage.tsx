@@ -41,10 +41,9 @@ export function RegisterPage() {
       await register({
         email: formData.email,
         password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        role: formData.role,
-        company: formData.company
+        full_name: `${formData.firstName} ${formData.lastName}`,
+        phone: formData.company, // Using company field as phone for now
+        role: formData.role
       });
       navigate('/dashboard');
     } catch (err) {

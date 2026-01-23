@@ -19,7 +19,7 @@ import {
   ChartBarIcon,
   PlusIcon,
   EyeIcon,
-  DownloadIcon,
+  ArrowDownTrayIcon,
   ShareIcon,
   ChatBubbleLeftRightIcon,
   BellIcon,
@@ -29,7 +29,50 @@ import {
   GlobeAltIcon,
   StarIcon
 } from '@heroicons/react/24/outline';
-import { Project, ProjectMilestone, ProjectDocument, ProjectImage } from '../types';
+import PhotoUpload from '../components/PhotoUpload';
+import PhotoGallery from '../components/PhotoGallery';
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  status: 'planning' | 'in_progress' | 'completed' | 'on_hold';
+  priority: 'low' | 'medium' | 'high';
+  budget: number;
+  startDate: Date;
+  endDate?: Date;
+  contractorId?: string;
+  homeownerId: string;
+  address: string;
+  images: string[];
+  documents: string[];
+  milestones: any[];
+}
+
+interface ProjectMilestone {
+  id: string;
+  title: string;
+  description: string;
+  dueDate: Date;
+  completed: boolean;
+  completedDate?: Date;
+}
+
+interface ProjectDocument {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  uploadedAt: Date;
+  uploadedBy: string;
+}
+
+interface ProjectImage {
+  id: string;
+  url: string;
+  caption?: string;
+  uploadedAt: Date;
+  uploadedBy: string;
+}
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -666,7 +709,7 @@ export function ProjectDetailPage() {
                             <span>View</span>
                           </button>
                           <button className="text-accent-green hover:text-green-400 text-sm flex items-center space-x-1">
-                            <DownloadIcon className="h-4 w-4" />
+                            <ArrowDownTrayIcon className="h-4 w-4" />
                             <span>Download</span>
                           </button>
                         </div>
@@ -683,39 +726,25 @@ export function ProjectDetailPage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white">Project Images</h3>
-                <button className="px-4 py-2 bg-accent-green hover:bg-green-600 text-white rounded-lg transition-colors flex items-center space-x-2">
-                  <PlusIcon className="h-5 w-5" />
-                  <span>Upload Images</span>
-                </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {project.images?.map(image => (
-                  <div key={image.id} className="bg-dark-primary rounded-lg overflow-hidden">
-                    <div className="aspect-video bg-gray-800">
-                      <img
-                        src={image.url}
-                        alt={image.caption}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="text-white font-medium">{image.caption}</h4>
-                      <p className="text-gray-400 text-sm mt-1">
-                        Uploaded by {image.uploadedBy} on {image.uploadedAt.toLocaleDateString()}
-                      </p>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          image.category === 'before' ? 'bg-red-500 bg-opacity-20 text-red-400' :
-                          image.category === 'progress' ? 'bg-blue-500 bg-opacity-20 text-blue-400' :
-                          'bg-green-500 bg-opacity-20 text-green-400'
-                        }`}>
-                          {image.category}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              
+              {/* Photo Upload Section */}
+              <div className="bg-dark-primary rounded-lg p-6">
+                <h4 className="text-white font-medium mb-4">Upload New Photos</h4>
+                <PhotoUpload 
+                  projectId={project.id}
+                  onUploadComplete={() => {
+                    // Refresh photos after upload
+                    window.location.reload();
+                  }}
+                />
               </div>
+              
+              {/* Photo Gallery Section */}
+              <PhotoGallery 
+                projectId={project.id}
+                editable={true}
+              />
             </div>
           )}
 

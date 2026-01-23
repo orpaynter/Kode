@@ -16,7 +16,39 @@ import {
   DocumentArrowDownIcon,
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
-import { InsuranceClaim, Assessment } from '../types';
+import { useAssessments } from '../hooks/useAssessments';
+import { useAuth } from '../hooks/useAuth';
+interface InsuranceClaim {
+  id: string;
+  claimNumber: string;
+  policyNumber: string;
+  claimantName: string;
+  claimantEmail: string;
+  claimantPhone: string;
+  propertyAddress: string;
+  incidentDate: Date;
+  claimDate: Date;
+  damageType: string;
+  estimatedAmount: number;
+  status: 'submitted' | 'under_review' | 'approved' | 'denied' | 'paid';
+  adjusterId?: string;
+  assessmentId?: string;
+  documents: string[];
+  photos: string[];
+  notes?: string;
+}
+
+interface Assessment {
+  id: string;
+  propertyAddress: string;
+  damageLevel?: 'minor' | 'moderate' | 'severe';
+  estimatedCost?: number;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  createdAt: Date;
+  images: string[];
+  claimId?: string;
+  aiConfidence?: number;
+}
 
 export function InsuranceDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'claims' | 'assessments' | 'reports'>('overview');
@@ -59,31 +91,29 @@ export function InsuranceDashboard() {
     }
   ];
 
-  const recentAssessments: Assessment[] = [
-    {
-      id: 'ASS-001',
-      propertyAddress: '789 Pine St, Anytown, ST 12345',
-      status: 'completed',
-      createdAt: new Date('2024-01-18'),
-      damageLevel: 'moderate',
-      estimatedCost: 9500,
-      images: [],
-      aiConfidence: 92,
-      claimId: 'CLM-2024-003'
-    },
-    {
-      id: 'ASS-002',
-      propertyAddress: '321 Elm Ave, Somewhere, ST 67890',
-      status: 'processing',
-      createdAt: new Date('2024-01-22'),
-      images: [],
-      claimId: 'CLM-2024-004'
-    }
-  ];
+  // Fetch real data from Supabase
+  const { assessments, loading: assessmentsLoading } = useAssessments();
+  const { user } = useAuth();
+  
+  // Transform assessments to match insurance claim format
+  const recentAssessments = assessments?.slice(0, 5).map(assessment => ({
+    id: assessment.id,
+    propertyAddress: assessment.property_address,
+    status: assessment.status,
+    createdAt: new Date(assessment.created_at),
+    damageLevel: assessment.damage_level,
+    estimatedCost: assessment.estimated_cost || 0,
+    images: [],
+    aiConfidence: assessment.ai_confidence || 0,
+    claimId: `CLM-${new Date(assessment.created_at).getFullYear()}-${assessment.id.slice(-3)}`
+  })) || [];
 
   const stats = {
-    pendingClaims: 24,
-    processedToday: 8,
+    pendingClaims: assessments?.filter(a => a.status === 'pending').length || 0,
+    processedToday: assessments?.filter(a => {
+      const today = new Date().toDateString();
+      return new Date(a.created_at).toDateString() === today;
+    }).length || 0,
     avgProcessingTime: 3.2,
     fraudDetected: 2
   };

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* OrPaynter brand colors */
+  --orpaynter-deep-blue: #1E40AF;
+  --orpaynter-bright-amber: #F59E0B;
+  --orpaynter-cool-gray: #1F2937;
+  --orpaynter-success-green: #10B981;
+  --orpaynter-warning-red: #EF4444;
+  
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--orpaynter-cool-gray);
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg;
+  }
+  
+  .btn-primary {
+    @apply bg-orpaynter-deep-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-orpaynter-deep-blue/90 transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-orpaynter-bright-amber text-white px-4 py-2 rounded-lg font-medium hover:bg-orpaynter-bright-amber/90 transition-colors;
+  }
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}

@@ -1,0 +1,20 @@
+CREATE TABLE damage_assessments (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    lead_id UUID NOT NULL,
+    photo_url TEXT NOT NULL,
+    ai_analysis_result JSONB,
+    damage_types TEXT[],
+    confidence_score DECIMAL(3,2),
+    estimated_cost_min INTEGER,
+    estimated_cost_max INTEGER,
+    insurance_claim_probability DECIMAL(3,2),
+    priority_level VARCHAR(20) CHECK (priority_level IN ('low',
+    'medium',
+    'high',
+    'emergency')),
+    analysis_status VARCHAR(20) DEFAULT 'processing' CHECK (analysis_status IN ('processing',
+    'completed',
+    'failed')),
+    processing_time_seconds INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);

@@ -13,12 +13,26 @@ import {
   PhotoIcon,
   PlusIcon,
   XMarkIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
+  WrenchScrewdriverIcon,
+  ClipboardDocumentListIcon
 } from '@heroicons/react/24/outline';
-import { ProjectFormData } from '../types';
+import { useAuth } from '../hooks/useAuth';
+import { supabaseDataService } from '../services/supabaseData';
+interface ProjectFormData {
+  title: string;
+  description: string;
+  budget: number;
+  startDate: Date;
+  endDate?: Date;
+  priority: 'low' | 'medium' | 'high';
+  address: string;
+  contractorId?: string;
+}
 
 export function NewProjectPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<ProjectFormData>({
     title: '',
@@ -129,19 +143,40 @@ export function NewProjectPage() {
 
   const handleSubmit = async () => {
     if (!validateStep(currentStep)) return;
+    if (!user) {
+      setErrors({ ...errors, submit: 'You must be logged in to create a project' });
+      return;
+    }
 
     setIsSubmitting(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Create project data for Supabase
+      const projectData = {
+        title: formData.title,
+        description: formData.description,
+        project_type: formData.type,
+        priority: formData.priority,
+        property_address: formData.propertyAddress,
+        homeowner_name: formData.homeownerName,
+        homeowner_email: formData.homeownerEmail,
+        homeowner_phone: formData.homeownerPhone,
+        contractor_id: formData.contractorId || null,
+        start_date: formData.startDate,
+        estimated_completion: formData.estimatedCompletion,
+        estimated_cost: formData.estimatedCost,
+        status: 'planning',
+        completion_percentage: 0,
+        milestones: formData.milestones,
+        created_by: user.id
+      };
+
+      const project = await supabaseDataService.createProject(projectData);
       
-      // In real app, submit to API
-      console.log('Project data:', formData);
-      
-      // Navigate to projects list or new project detail
-      navigate('/projects');
+      // Navigate to the project details page
+      navigate(`/projects/${project.id}`);
     } catch (error) {
       console.error('Error creating project:', error);
+      setErrors({ ...errors, submit: 'Failed to create project. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -630,28 +665,36 @@ export function NewProjectPage() {
               <ArrowLeftIcon className="h-5 w-5 rotate-180" />
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className={`px-6 py-3 rounded-lg transition-colors flex items-center space-x-2 ${
-                isSubmitting
-                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                  : 'bg-accent-green hover:bg-green-600 text-white'
-              }`}
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
-                  <span>Creating Project...</span>
-                </>
-              ) : (
-                <>
-                  <CheckCircleIcon className="h-5 w-5" />
-                  <span>Create Project</span>
-                </>
+            <div className="flex flex-col items-end space-y-2">
+              {errors.submit && (
+                <div className="flex items-center space-x-2 bg-red-900/20 border border-red-500 rounded-lg px-4 py-2">
+                  <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
+                  <span className="text-red-400 text-sm">{errors.submit}</span>
+                </div>
               )}
-            </button>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className={`px-6 py-3 rounded-lg transition-colors flex items-center space-x-2 ${
+                  isSubmitting
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'bg-accent-green hover:bg-green-600 text-white'
+                }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span>Creating Project...</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircleIcon className="h-5 w-5" />
+                    <span>Create Project</span>
+                  </>
+                )}
+              </button>
+            </div>
           )}
         </div>
       </div>

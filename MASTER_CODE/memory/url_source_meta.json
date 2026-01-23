@@ -1,0 +1,77 @@
+{
+  "_source_id": 10,
+  "sources": {
+    "Desktop Application Framework Analysis for OrPaynter": {
+      "https://electronjs.org/": {
+        "id": 1,
+        "publisher": "Electron.js",
+        "url": "https://electronjs.org/",
+        "title": "Electron Official Website - Build cross-platform desktop apps",
+        "info": "Official Electron documentation covering framework capabilities, features, cross-platform support, stability, and extensibility. Shows Electron as mature framework with Chromium/Node.js architecture."
+      },
+      "https://v2.tauri.app/": {
+        "id": 2,
+        "publisher": "Tauri Team",
+        "url": "https://v2.tauri.app/",
+        "title": "Tauri 2.0 Official Website",
+        "info": "Official Tauri 2.0 documentation highlighting frontend independence, cross-platform support, security focus, and minimal bundle sizes (600KB). Built on Rust with native webviews."
+      },
+      "https://neutralino.js.org/": {
+        "id": 3,
+        "publisher": "Neutralino.js",
+        "url": "https://neutralino.js.org/",
+        "title": "Neutralinojs Official Website - Build lightweight cross-platform desktop apps",
+        "info": "Official Neutralino.js documentation showing lightweight approach (2MB uncompressed, 0.5MB compressed), uses OS web browser library instead of bundling Chromium, supports multiple languages via IPC."
+      },
+      "https://codeology.co.nz/articles/tauri-vs-electron-2025-desktop-development.html": {
+        "id": 4,
+        "publisher": "Codeology",
+        "url": "https://codeology.co.nz/articles/tauri-vs-electron-2025-desktop-development.html",
+        "title": "Tauri vs Electron: A 2025 Comparison for Desktop Development",
+        "info": "Comprehensive 2025 comparison between Tauri and Electron with performance metrics: Tauri bundles 2.5-3MB vs Electron 80-120MB, Tauri uses 30-40MB RAM vs Electron 100MB, startup times under 500ms vs 1-2s."
+      },
+      "https://flatirons.com/blog/electron-js-desktop-application-examples-in-2024/": {
+        "id": 5,
+        "publisher": "Flatirons",
+        "url": "https://flatirons.com/blog/electron-js-desktop-application-examples-in-2024/",
+        "title": "Electron.js: Desktop Application Examples in 2025",
+        "info": "Detailed analysis of Electron.js capabilities, architecture (Chromium + Node.js), cross-platform support, ecosystem access, and real-world examples including Discord, Slack, VS Code, Teams."
+      },
+      "https://www.levminer.com/blog/tauri-vs-electron": {
+        "id": 6,
+        "publisher": "Levminer",
+        "url": "https://www.levminer.com/blog/tauri-vs-electron",
+        "title": "Tauri VS. Electron - Real world application",
+        "info": "Real-world performance benchmarks: Tauri installer 2.5MB vs Electron 85MB, startup time 2s vs 4s, idle RAM 80MB vs 120MB on Windows. Detailed technical comparison of system resource usage."
+      },
+      "https://www.gethopp.app/blog/tauri-vs-electron": {
+        "id": 7,
+        "publisher": "Hopp",
+        "url": "https://www.gethopp.app/blog/tauri-vs-electron",
+        "title": "Tauri vs. Electron – performance, bundle size, and the real trade-offs",
+        "info": "Performance metrics: Tauri 172MB vs Electron 409MB RAM after 6 windows, bundle size 8.6MiB vs 244MiB. Architectural differences between WebView vs Chromium bundling."
+      },
+      "https://medium.com/@bhagyarana80/why-i-switched-from-electron-to-tauri-for-a-10x-faster-desktop-app-a796fc337292": {
+        "id": 8,
+        "publisher": "Medium",
+        "url": "https://medium.com/@bhagyarana80/why-i-switched-from-electron-to-tauri-for-a-10x-faster-desktop-app-a796fc337292",
+        "title": "Why I Switched from Electron to Tauri for a 10x Faster Desktop App",
+        "info": "Migration case study showing 10x performance boost, 97% bundle size reduction, startup time improvement from 4.5s to <0.5s, RAM usage from 230MB to 18MB, installer from 160MB to 3.2MB."
+      },
+      "https://blog.logrocket.com/why-use-electron-alternative/": {
+        "id": 9,
+        "publisher": "LogRocket",
+        "url": "https://blog.logrocket.com/why-use-electron-alternative/",
+        "title": "Why you should use an Electron alternative",
+        "info": "Discussion of Neutralino.js limitations including MacOS compatibility issues, runtime memory consumption debates, and 'not ready for prime time' status as of 2022."
+      },
+      "https://shivlab.com/blog/best-windows-app-development-frameworks/": {
+        "id": 10,
+        "publisher": "ShivLab",
+        "url": "https://shivlab.com/blog/best-windows-app-development-frameworks/",
+        "title": "15 Best Windows App Frameworks for 2025",
+        "info": "Windows app framework analysis highlighting security considerations for UWP (Microsoft Store distribution), .NET Framework (Microsoft backing), and Tauri (high-security features)."
+      }
+    }
+  }
+}
