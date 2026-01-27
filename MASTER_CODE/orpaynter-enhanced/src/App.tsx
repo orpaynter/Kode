@@ -15,6 +15,17 @@ import { AIAgents } from './pages/AIAgents'
 import { Billing } from './pages/Billing'
 import { Settings } from './pages/Settings'
 import { ErrorBoundary } from './components/ErrorBoundary'
+
+// Public / Landing Pages
+import LandingPage from './pages/public/LandingPage'
+import ChatbotFlow from './pages/public/ChatbotFlow'
+import DamageAssessment from './pages/public/DamageAssessment'
+import ResultsDashboard from './pages/public/ResultsDashboard'
+
+// Admin Pages
+import LeadAdminLogin from './pages/admin/LeadAdminLogin'
+import LeadAdminDashboard from './pages/admin/LeadAdminDashboard'
+
 import './globals.css'
 
 const queryClient = new QueryClient({
@@ -32,14 +43,24 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Router>
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+            <div className="min-h-screen bg-slate-50">
               <Routes>
-                {/* Auth routes */}
+                {/* Public Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/chatbot" element={<ChatbotFlow />} />
+                <Route path="/assessment" element={<DamageAssessment />} />
+                <Route path="/results/:leadId" element={<ResultsDashboard />} />
+
+                {/* Lead Admin Routes */}
+                <Route path="/admin/login" element={<LeadAdminLogin />} />
+                <Route path="/admin/dashboard" element={<LeadAdminDashboard />} />
+
+                {/* Auth routes for App */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 
-                {/* Protected routes */}
+                {/* Protected App routes */}
                 <Route
                   path="/dashboard"
                   element={
@@ -111,9 +132,8 @@ function App() {
                   }
                 />
                 
-                {/* Default redirect */}
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                {/* Fallback */}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </div>
           </Router>
