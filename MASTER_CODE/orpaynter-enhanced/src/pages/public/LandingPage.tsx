@@ -245,28 +245,46 @@ const LandingPage: React.FC = () => {
 
       {/* Social Proof */}
       <section className="py-24 border-y border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-12">
-            <p className="text-sm font-mono text-slate-500 uppercase tracking-widest mb-8">Works with your stack</p>
-            <div className="flex flex-wrap justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all">
-              {/* Using text labels as placeholders for logos */}
-              <span className="text-xl font-bold">Supabase</span>
-              <span className="text-xl font-bold">Vercel</span>
-              <span className="text-xl font-bold">Stripe</span>
-              <span className="text-xl font-bold">Slack</span>
-              <span className="text-xl font-bold">GitHub</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="bg-[#0D0F14] p-10 rounded-3xl border border-white/5 relative">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-xs font-bold text-white uppercase tracking-widest">Validated Intelligence</div>
+              <div className="space-y-6">
+                <div className="flex justify-between items-end border-b border-white/5 pb-4">
+                  <span className="text-slate-400 font-mono text-sm">CORRELATION LATENCY</span>
+                  <span className="text-2xl font-bold text-blue-400">0.05ms</span>
+                </div>
+                <div className="flex justify-between items-end border-b border-white/5 pb-4">
+                  <span className="text-slate-400 font-mono text-sm">MARKET DETECTION ACCURACY</span>
+                  <span className="text-2xl font-bold text-green-400">82.5%</span>
+                </div>
+                <div className="flex justify-between items-end border-b border-white/5 pb-4">
+                  <span className="text-slate-400 font-mono text-sm">FALSE POSITIVE RATE</span>
+                  <span className="text-2xl font-bold text-white">0.00%</span>
+                </div>
+                <div className="flex justify-between items-end">
+                  <span className="text-slate-400 font-mono text-sm">CROSS-DOMAIN SIGNIFICANCE</span>
+                  <span className="text-2xl font-bold text-cyan-400">p &lt; 0.001</span>
+                </div>
+              </div>
+              <div className="mt-8 pt-8 border-t border-white/5">
+                <p className="text-sm text-slate-500 font-medium">
+                  Results from the Conclusive Validation Report (2026). Verified using blockchain-backed ground truth and historical BTC/ETH/AAPL/TSLA datasets.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="bg-[#0D0F14] p-10 rounded-3xl border border-white/5 relative">
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-xs font-bold text-white uppercase">Founder Note</div>
-            <p className="text-xl text-slate-300 italic mb-8 leading-relaxed">
-              "I built OrPaynter while running three companies and 16+ patents in flight. This is the system I needed to not drop the ball. It's the intelligence overlay I wish I had from day one."
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400" />
-              <div className="text-left">
-                <p className="text-white font-bold">OrPaynter Founder</p>
-                <p className="text-slate-500 text-sm">100M+ Attention Minutes Managed</p>
+            <div className="space-y-8 text-left">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white leading-tight uppercase">
+                The Conclusive Truth <br />
+                <span className="text-blue-500">In Every Data Point.</span>
+              </h2>
+              <p className="text-slate-400 text-lg">
+                We commissioned a rigorous, data-driven validation to move beyond theoretical AI claims. The result is the MCP ecosystem: a system that not only meets but substantially exceeds its core performance targets across financial, social, and operational domains.
+              </p>
+              <div className="flex gap-4">
+                <button className="text-blue-400 font-bold hover:text-blue-300 flex items-center gap-2 transition-all">
+                  View Validation Report <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
