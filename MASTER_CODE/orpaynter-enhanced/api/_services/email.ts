@@ -26,9 +26,33 @@ const wrapHtml = (body: string) =>
 // Email templates
 export const templates = {
   welcome: (name: string): EmailTemplate => ({
-    subject: `Welcome to OrPaynter, ${name}!`,
-    html: wrapHtml(`<h1>Welcome ${name}</h1><p>Get started with OrPaynter today.</p>`),
-    text: `Welcome ${name} to OrPaynter`
+    subject: `Command Granted: Welcome to the Orchestrator of Orchestrators`,
+    html: wrapHtml(`
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; line-height: 1.6;">
+        <h1 style="color: #2563eb; font-size: 24px; text-transform: uppercase; letter-spacing: 1px;">The Meta-Intelligence Layer is Active.</h1>
+        <p style="font-size: 16px;">
+          Welcome, ${name}. 
+        </p>
+        <p style="font-size: 16px;">
+          You're here because you realize that more tools and more agents only lead to more chaos. OrPaynter isn't another tool—it's the <strong>Orchestrator of Orchestrators</strong>. 
+        </p>
+        <p style="font-size: 16px;">
+          By correlating 508+ sources in 91ms, we're giving you a strategic nervous system that ensures your team, your tools, and your AI agents stay aligned to one objective.
+        </p>
+        <p style="font-size: 16px; background: #f8fafc; padding: 15px; border-left: 4px solid #2563eb;">
+          <strong>Next Phase:</strong><br/>
+          We are currently onboarding founders in elite cohorts to maintain the 91ms latency threshold. I will reach out personally within 48 hours to begin your integration.
+        </p>
+        <p style="font-size: 16px;">
+          Prepare your primary objective. We'll start there.
+        </p>
+        <p style="font-size: 16px; margin-top: 30px;">
+          Command yours,<br/>
+          <strong>The OrPaynter Founder</strong>
+        </p>
+      </div>
+    `),
+    text: `Welcome to the Orchestrator of Orchestrators. The meta-intelligence layer is active. We'll reach out within 48 hours.`
   }),
   onboarding: (name: string): EmailTemplate => ({
     subject: `Complete Your OrPaynter Setup`,
