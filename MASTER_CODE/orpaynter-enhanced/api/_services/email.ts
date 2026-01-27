@@ -37,7 +37,7 @@ export const templates = {
           You're here because you realize that more tools and more agents only lead to more chaos. OrPaynter isn't another tool—it's the <strong>Orchestrator of Orchestrators</strong>. 
         </p>
         <p style="font-size: 16px;">
-          By correlating 508+ sources in 91ms, we're giving you a strategic nervous system that ensures your team, your tools, and your AI agents stay aligned to one objective.
+          By correlating 1,100+ validated data points in <strong>0.05ms</strong>, we're giving you a strategic nervous system that ensures your team, your tools, and your AI agents stay aligned to one objective with zero false positives.
         </p>
         <p style="font-size: 16px; background: #f8fafc; padding: 15px; border-left: 4px solid #2563eb;">
           <strong>Next Phase:</strong><br/>

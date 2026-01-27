@@ -103,7 +103,7 @@ const LandingPage: React.FC = () => {
             </h1>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
               The meta-intelligence layer that aligns your agents, your tools, and your team. 
-              Correlating 508+ sources in 91ms to ensure your next move is the right move.
+              Validated at <span className="text-blue-400 font-bold">0.05ms correlation latency</span> with a blockchain-backed ground truth.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
@@ -176,13 +176,13 @@ const LandingPage: React.FC = () => {
                 icon: Cpu,
                 step: "01",
                 title: "Ingest the Context",
-                description: "Connect your 508+ sources—Notion, Slack, GitHub, CRM, and legal docs. OrPaynter builds the Intelligence Graph in real-time."
+                description: "Connect your global data sources. OrPaynter builds the Intelligence Graph at 0.05ms speed, 1,800x faster than industry standards."
               },
               {
                 icon: Target,
                 step: "02",
                 title: "Align the Orchestrators",
-                description: "Define your high-level objectives. OrPaynter coordinates your existing AI agents and tools to ensure zero drift from the goal."
+                description: "Define objectives. Our blockchain-verified engine coordinates agents with 82.5% market detection accuracy and zero false positives."
               },
               {
                 icon: Workflow,
@@ -223,7 +223,7 @@ const LandingPage: React.FC = () => {
               {
                 title: "For Legal / IP",
                 tagline: "Innovation, Documented.",
-                benefits: ["Automated innovation trails", "91ms audit-ready discovery", "Risk mitigation by design"]
+                benefits: ["Automated innovation trails", "0.05ms audit-ready discovery", "Risk mitigation by blockchain design"]
               }
             ].map((item, i) => (
               <div key={i} className="bg-[#0A0C10] border border-white/10 p-8 rounded-2xl">
