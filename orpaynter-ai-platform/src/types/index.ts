@@ -194,8 +194,6 @@ export interface Lead {
   notes?: string;
   created_at: string;
   last_contact?: string;
-}
-
 export interface InsuranceClaim {
   id: string;
   user_id: string;
@@ -206,6 +204,13 @@ export interface InsuranceClaim {
   filed_date: string;
   updated_at: string;
 }
+
+// Notification and Email Types
+export type EmailTemplate = {
+  subject: string;
+  html: string;
+  text?: string;
+};
 
 export interface FraudAlert {
   id: string;
