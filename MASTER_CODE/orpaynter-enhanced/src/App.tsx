@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { RoleRoute } from './components/RoleRoute'
 import { LoginPage } from './pages/auth/LoginPage'
 import { SignUpPage } from './pages/auth/SignUpPage'
 import { AuthCallback } from './pages/auth/AuthCallback'
@@ -21,6 +22,11 @@ import LandingPage from './pages/public/LandingPage'
 import ChatbotFlow from './pages/public/ChatbotFlow'
 import DamageAssessment from './pages/public/DamageAssessment'
 import ResultsDashboard from './pages/public/ResultsDashboard'
+
+// Role-Specific Dashboards
+import SupplierDashboard from './pages/supplier/SupplierDashboard'
+import InsuranceDashboard from './pages/insurance/InsuranceDashboard'
+import HomeownerDashboard from './pages/homeowner/HomeownerDashboard'
 
 // Admin Pages
 import LeadAdminLogin from './pages/admin/LeadAdminLogin'
@@ -60,55 +66,55 @@ function App() {
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 
-                {/* Protected App routes */}
+                {/* Contractor Routes (Default Dashboard) */}
                 <Route
                   path="/dashboard"
                   element={
-                    <ProtectedRoute>
+                    <RoleRoute allowedRoles={['contractor', 'admin']}>
                       <DashboardLayout>
                         <Dashboard />
                       </DashboardLayout>
-                    </ProtectedRoute>
+                    </RoleRoute>
                   }
                 />
                 <Route
                   path="/projects"
                   element={
-                    <ProtectedRoute>
+                    <RoleRoute allowedRoles={['contractor', 'admin']}>
                       <DashboardLayout>
                         <Projects />
                       </DashboardLayout>
-                    </ProtectedRoute>
+                    </RoleRoute>
                   }
                 />
                 <Route
                   path="/analytics"
                   element={
-                    <ProtectedRoute>
+                    <RoleRoute allowedRoles={['contractor', 'admin']}>
                       <DashboardLayout>
                         <Analytics />
                       </DashboardLayout>
-                    </ProtectedRoute>
+                    </RoleRoute>
                   }
                 />
                 <Route
                   path="/referrals"
                   element={
-                    <ProtectedRoute>
+                    <RoleRoute allowedRoles={['contractor', 'admin']}>
                       <DashboardLayout>
                         <Referrals />
                       </DashboardLayout>
-                    </ProtectedRoute>
+                    </RoleRoute>
                   }
                 />
                 <Route
                   path="/ai-agents"
                   element={
-                    <ProtectedRoute>
+                    <RoleRoute allowedRoles={['contractor', 'admin']}>
                       <DashboardLayout>
                         <AIAgents />
                       </DashboardLayout>
-                    </ProtectedRoute>
+                    </RoleRoute>
                   }
                 />
                 <Route
@@ -129,6 +135,38 @@ function App() {
                         <Settings />
                       </DashboardLayout>
                     </ProtectedRoute>
+                  }
+                />
+
+                {/* Other Role Dashboards */}
+                <Route
+                  path="/supplier/dashboard"
+                  element={
+                    <RoleRoute allowedRoles={['supplier', 'admin']}>
+                      <DashboardLayout>
+                        <SupplierDashboard />
+                      </DashboardLayout>
+                    </RoleRoute>
+                  }
+                />
+                <Route
+                  path="/insurance/dashboard"
+                  element={
+                    <RoleRoute allowedRoles={['insurance', 'admin']}>
+                      <DashboardLayout>
+                        <InsuranceDashboard />
+                      </DashboardLayout>
+                    </RoleRoute>
+                  }
+                />
+                <Route
+                  path="/homeowner/dashboard"
+                  element={
+                    <RoleRoute allowedRoles={['homeowner', 'admin']}>
+                      <DashboardLayout>
+                        <HomeownerDashboard />
+                      </DashboardLayout>
+                    </RoleRoute>
                   }
                 />
                 

@@ -202,25 +202,25 @@ export function Billing() {
 
     setChangingPlan(true)
     try {
-      // Simulate plan change
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      const newPlan = plans.find(p => p.id === planId)
-      if (newPlan) {
-        // Update current plan
-        setCurrentPlan({ ...newPlan, current: true })
-        
-        // Update usage limits
-        setUsage(prev => ({
-          ...prev,
-          monthly_limit: newPlan.monthlyLimit
-        }))
-        
-        toast.success(`Successfully switched to ${newPlan.name} plan!`)
+      const { data, error } = await supabase.functions.invoke('create-subscription', {
+        body: { 
+          planType: planId, 
+          customerEmail: user?.email 
+        }
+      })
+
+      if (error) throw error
+
+      if (data?.url) {
+        window.location.href = data.url
+      } else {
+        toast.success(`Successfully switched to ${planId} plan!`)
+        // Reload to show updated status
+        loadBillingData()
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Plan change error:', error)
-      toast.error('Failed to change plan. Please try again.')
+      toast.error('Failed to change plan: ' + (error.message || 'Unknown error'))
     } finally {
       setChangingPlan(false)
     }

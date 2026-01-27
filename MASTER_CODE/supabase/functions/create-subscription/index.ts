@@ -1,5 +1,5 @@
 
-        const planConfigs = {"individual": {"amount": 9900, "name": "Individual Plan", "currency": "usd", "interval": "month", "monthlyLimit": 50}, "team": {"amount": 29900, "name": "Team Plan", "currency": "usd", "interval": "month", "monthlyLimit": 200}, "enterprise": {"amount": 99900, "name": "Enterprise Plan", "currency": "usd", "interval": "month", "monthlyLimit": -1}}
+        const planConfigs = {"starter": {"amount": 9900, "name": "Starter Plan", "currency": "usd", "interval": "month", "monthlyLimit": 25}, "professional": {"amount": 29900, "name": "Professional Plan", "currency": "usd", "interval": "month", "monthlyLimit": 100}, "enterprise": {"amount": 99900, "name": "Enterprise Plan", "currency": "usd", "interval": "month", "monthlyLimit": 500}}
         const tableName = "orpaynter_plans"
 
 async function createDynamicPrice(planType: string, stripeSecretKey: string) {
