@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import {
   LayoutDashboard,
+  Shield,
   FolderOpen,
   BarChart3,
   Users,
@@ -20,6 +21,7 @@ interface DashboardLayoutProps {
 }
 
 const navigation = [
+  { name: 'Command Center', href: '/command-center', icon: Shield },
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Projects', href: '/projects', icon: FolderOpen },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },

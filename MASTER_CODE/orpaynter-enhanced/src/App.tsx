@@ -9,6 +9,7 @@ import { SignUpPage } from './pages/auth/SignUpPage'
 import { AuthCallback } from './pages/auth/AuthCallback'
 import { DashboardLayout } from './components/layout/DashboardLayout'
 import { Dashboard } from './pages/Dashboard'
+import { CommandCenter } from './pages/CommandCenter'
 import { Projects } from './pages/Projects'
 import { Analytics } from './pages/Analytics'
 import { Referrals } from './pages/Referrals'
@@ -75,6 +76,16 @@ function App() {
                         <Dashboard />
                       </DashboardLayout>
                     </RoleRoute>
+                  }
+                />
+                <Route
+                  path="/command-center"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <CommandCenter />
+                      </DashboardLayout>
+                    </ProtectedRoute>
                   }
                 />
                 <Route

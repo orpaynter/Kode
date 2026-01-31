@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import { 
   Shield, 
   Zap, 
@@ -16,6 +18,7 @@ import {
 import { toast } from 'react-hot-toast';
 
 const LandingPage: React.FC = () => {
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -82,12 +85,21 @@ const LandingPage: React.FC = () => {
               <a href="#how-it-works" className="hover:text-white transition-colors">Architecture</a>
               <a href="#outcomes" className="hover:text-white transition-colors">Outcomes</a>
               <a href="#validation" className="hover:text-white transition-colors">Validation</a>
-              <button 
-                onClick={() => document.getElementById('early-access-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-white text-black px-6 py-2.5 rounded-full hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/5"
-              >
-                Join the Elite
-              </button>
+              {user ? (
+                <Link 
+                  to="/command-center"
+                  className="bg-blue-600 text-white px-6 py-2.5 rounded-full hover:bg-blue-500 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-blue-500/20"
+                >
+                  Command Center
+                </Link>
+              ) : (
+                <button 
+                  onClick={() => document.getElementById('early-access-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="bg-white text-black px-6 py-2.5 rounded-full hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/5"
+                >
+                  Join the Elite
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -260,7 +272,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Social Proof / Validation */}
+      {/* The Truth Machine - Conclusive Validation */}
       <section id="validation" className="py-24 border-y border-white/5 relative overflow-hidden">
         <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full -z-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -268,32 +280,32 @@ const LandingPage: React.FC = () => {
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-[#0D0F14] p-12 rounded-3xl border border-white/10 shadow-2xl">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-2 rounded-full text-[10px] font-black text-white uppercase tracking-[0.3em] shadow-xl">Proof of Intelligence</div>
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-2 rounded-full text-[10px] font-black text-white uppercase tracking-[0.3em] shadow-xl">Audit-Ready Intelligence</div>
                 <div className="space-y-8">
                   <div className="flex justify-between items-end border-b border-white/5 pb-6">
                     <div className="space-y-1">
-                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Correlation Latency</span>
-                      <p className="text-sm text-slate-400 font-medium">1,820x faster than industry average</p>
+                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Signal Correlation</span>
+                      <p className="text-sm text-slate-400 font-medium">Validated against 508 live data sources</p>
                     </div>
                     <span className="text-4xl font-black text-blue-400 tracking-tighter">0.05ms</span>
                   </div>
                   <div className="flex justify-between items-end border-b border-white/5 pb-6">
                     <div className="space-y-1">
-                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Market Detection</span>
-                      <p className="text-sm text-slate-400 font-medium">Verified HFT signal accuracy</p>
+                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Detection Precision</span>
+                      <p className="text-sm text-slate-400 font-medium">HFT-grade anomaly detection</p>
                     </div>
                     <span className="text-4xl font-black text-green-400 tracking-tighter">82.5%</span>
                   </div>
                   <div className="flex justify-between items-end border-b border-white/5 pb-6">
                     <div className="space-y-1">
-                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">False Positive Rate</span>
-                      <p className="text-sm text-slate-400 font-medium">Zero-drift objective alignment</p>
+                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">False Positive Drift</span>
+                      <p className="text-sm text-slate-400 font-medium">Zero-latency objective alignment</p>
                     </div>
                     <span className="text-4xl font-black text-white tracking-tighter">0.00%</span>
                   </div>
                   <div className="flex justify-between items-end">
                     <div className="space-y-1">
-                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Confidence Interval</span>
+                      <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">Confidence (P-Value)</span>
                       <p className="text-sm text-slate-400 font-medium">Blockchain-backed ground truth</p>
                     </div>
                     <span className="text-4xl font-black text-cyan-400 tracking-tighter">p&lt;0.001</span>
@@ -303,7 +315,7 @@ const LandingPage: React.FC = () => {
                   <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
                     <Shield className="h-8 w-8 text-blue-500" />
                     <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                      Extracted from the <span className="text-white">MCP Intelligence Ecosystem: Conclusive Validation Report (2026)</span>. Benchmarked against 508 live data sources.
+                      Extracted from the <span className="text-white">MCP Intelligence Ecosystem: Conclusive Validation Report (2026)</span>. Benchmarked against 1,100+ validated data points.
                     </p>
                   </div>
                 </div>
@@ -316,28 +328,107 @@ const LandingPage: React.FC = () => {
                   <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent italic">Truth Machine.</span>
                 </h2>
                 <p className="text-slate-400 text-xl leading-relaxed font-medium">
-                  We didn't build another LLM wrapper. We built a real-time correlation engine that validates reality against 500+ sources in 91ms (validated at 0.05ms for core graph operations).
+                  OrPaynter is the world's first <span className="text-white">Conclusive Intelligence Layer</span>. We correlate every signal, every document, and every agent action against a blockchain-verified objective. 
+                </p>
+                <p className="text-slate-500 text-lg leading-relaxed">
+                  While others provide "chatbots," we provide the <span className="text-blue-400">Strategic Nervous System</span> that ensures your organization moves as one.
                 </p>
               </div>
               
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <h4 className="text-white font-bold uppercase text-xs tracking-widest">Data Integrity</h4>
-                  <p className="text-sm text-slate-500">Immutable blockchain logging for every intelligence signal.</p>
+                  <h4 className="text-white font-bold uppercase text-xs tracking-widest">Immutable Logs</h4>
+                  <p className="text-sm text-slate-500">Every decision and correlation is logged to an immutable ledger for audit-readiness.</p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="text-white font-bold uppercase text-xs tracking-widest">Zero Latency</h4>
-                  <p className="text-sm text-slate-500">Front-run market anomalies before they manifest in UI.</p>
+                  <h4 className="text-white font-bold uppercase text-xs tracking-widest">Cross-Domain Memory</h4>
+                  <p className="text-sm text-slate-500">Context is preserved across Slack, GitHub, HubSpot, and Twilio automatically.</p>
                 </div>
               </div>
 
               <div className="flex pt-4">
                 <button className="group text-blue-400 font-black uppercase text-sm tracking-[0.2em] flex items-center gap-3 hover:text-white transition-all">
-                  Read Full Validation Report 
+                  Access the Full Validation Data 
                   <div className="bg-blue-500/10 p-2 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all">
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visual Preview - The actual program */}
+      <section className="py-24 bg-gradient-to-b from-[#0A0C10] to-[#0D0F14]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4">The Interface</h2>
+            <h3 className="text-4xl lg:text-6xl font-black text-white uppercase tracking-tighter">Command Control</h3>
+          </div>
+
+          <div className="relative group mx-auto max-w-5xl">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="relative bg-[#0A0C10] border border-white/10 rounded-2xl overflow-hidden shadow-2xl aspect-[16/10]">
+              {/* Mock Dashboard UI */}
+              <div className="absolute inset-0 p-8 flex flex-col gap-6">
+                <div className="flex justify-between items-center border-b border-white/5 pb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">System Status: Nominal</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="h-8 w-24 rounded bg-white/5 border border-white/10" />
+                    <div className="h-8 w-8 rounded bg-blue-600/20 border border-blue-500/50" />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-6 flex-1">
+                  <div className="col-span-2 space-y-6">
+                    <div className="h-1/2 rounded-xl bg-white/5 border border-white/5 p-6">
+                      <div className="flex justify-between mb-4">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase">Intelligence Graph</span>
+                        <div className="flex gap-2">
+                          <div className="h-1 w-8 rounded-full bg-blue-500" />
+                          <div className="h-1 w-8 rounded-full bg-white/10" />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-center h-full">
+                        <Workflow className="h-16 w-16 text-blue-500/20" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6 h-1/2">
+                      <div className="rounded-xl bg-white/5 border border-white/5 p-4 flex flex-col justify-between">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase">Active Agents</span>
+                        <span className="text-2xl font-black text-white">12</span>
+                      </div>
+                      <div className="rounded-xl bg-white/5 border border-white/5 p-4 flex flex-col justify-between">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase">Signals Processed</span>
+                        <span className="text-2xl font-black text-white">1.1M</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-blue-600/5 border border-blue-500/20 p-6 flex flex-col gap-4">
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Recent Actions</span>
+                    {[1, 2, 3, 4, 5].map(i => (
+                      <div key={i} className="h-12 w-full rounded-lg bg-white/5 border border-white/5" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Overlay for "Visualizing the Program" */}
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="text-center space-y-6 px-12">
+                  <h4 className="text-2xl font-bold text-white uppercase">Experience the Meta-Intelligence</h4>
+                  <p className="text-slate-300">Our command center is currently in private beta for elite cohorts. <br/>Join the waitlist to secure your seat.</p>
+                  <button 
+                    onClick={() => document.getElementById('early-access-form')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold uppercase text-sm tracking-widest hover:bg-blue-500 transition-all"
+                  >
+                    Request Demo Access
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -385,8 +476,125 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Execution Arms - The Tactical Nervous System */}
+      <section className="py-24 border-t border-white/5 bg-[#0A0C10]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  {
+                    name: "Communication (Twilio)",
+                    status: "Deeply Integrated",
+                    desc: "Autonomous voice and SMS channels for real-time outreach and verification.",
+                    icon: MessageSquare
+                  },
+                  {
+                    name: "Intelligence (AI/ASI)",
+                    status: "Proprietary Models",
+                    desc: "Leveraging Anthropic, OpenAI, and custom RoofNet models for high-fidelity analysis.",
+                    icon: Cpu
+                  },
+                  {
+                    name: "Distribution (Resend/Sendgrid)",
+                    status: "Optimized Throughput",
+                    desc: "Bulletproof email delivery for critical alerts and investor briefings.",
+                    icon: ArrowRight
+                  },
+                  {
+                    name: "Memory (CRM/Operational)",
+                    status: "Context Preservation",
+                    desc: "Unified operational memory across every interaction and data point.",
+                    icon: LayoutDashboard
+                  }
+                ].map((arm, i) => (
+                  <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:bg-white/10 transition-all group">
+                    <arm.icon className="h-8 w-8 text-blue-500 mb-4 group-hover:scale-110 transition-transform" />
+                    <h4 className="text-white font-bold text-sm uppercase mb-1">{arm.name}</h4>
+                    <p className="text-[10px] font-mono text-blue-400 mb-3">{arm.status}</p>
+                    <p className="text-slate-500 text-xs leading-relaxed">{arm.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="order-1 lg:order-2 space-y-8">
+              <h2 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em]">Tactical Execution</h2>
+              <h3 className="text-4xl lg:text-6xl font-black text-white uppercase tracking-tighter">Execution Arms. <br/><span className="text-slate-500">Not Just Insights.</span></h3>
+              <p className="text-slate-400 text-lg leading-relaxed font-medium">
+                Most platforms stop at "telling you what to do." OrPaynter possesses the <span className="text-white">Execution Arms</span> to actually do it. 
+                Our deep integration with Twilio, Sendgrid, and our proprietary AI stack means the Orchestrator doesn't just predict—it acts.
+              </p>
+              <div className="pt-6">
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                  <div className="bg-blue-500 p-2 rounded-lg">
+                    <Shield className="h-5 w-5 text-white" />
+                  </div>
+                  <p className="text-sm font-medium text-blue-300">
+                    Verified 91ms latency across all tactical execution nodes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Architecture / The Program */}
+      <section id="architecture" className="py-24 bg-[#0D0F14] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <h2 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4">The Program</h2>
+            <h3 className="text-4xl lg:text-6xl font-black text-white uppercase tracking-tighter">The Orchestration Stack</h3>
+          </div>
+
+          <div className="relative">
+            {/* Connection Lines (Conceptual) */}
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent -translate-y-1/2" />
+            
+            <div className="grid lg:grid-cols-3 gap-12 relative">
+              <div className="space-y-6">
+                <div className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-xl relative">
+                  <div className="absolute -top-4 left-6 bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-widest">Input Layer</div>
+                  <h4 className="text-xl font-bold text-white mb-4 uppercase">Data Ingestion</h4>
+                  <ul className="space-y-3 text-sm text-slate-400">
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> 508+ Live Data Sources</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> Real-time Context Extraction</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> Multi-Domain Correlation</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-blue-600/10 border border-blue-500/30 p-8 rounded-3xl backdrop-blur-xl relative scale-110 shadow-2xl shadow-blue-500/10">
+                  <div className="absolute -top-4 left-6 bg-cyan-500 px-4 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-widest">Meta-Layer</div>
+                  <h4 className="text-xl font-bold text-white mb-4 uppercase">The Orchestrator</h4>
+                  <ul className="space-y-3 text-sm text-slate-400">
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-cyan-400" /> 0.05ms Graph Correlation</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-cyan-400" /> Objective-Driven Alignment</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-cyan-400" /> Blockchain Signal Verification</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-xl relative">
+                  <div className="absolute -top-4 left-6 bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-widest">Action Layer</div>
+                  <h4 className="text-xl font-bold text-white mb-4 uppercase">Tactical Arms</h4>
+                  <ul className="space-y-3 text-sm text-slate-400">
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> Twilio Voice/SMS Automation</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> ASI Model Execution</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-500" /> CRM/Operational Sync</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Early Access Form */}
-      <section id="pricing" className="py-24 bg-[#0D0F14]">
+      <section id="early-access-form" className="py-24 bg-[#0D0F14]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">Apply for early access</h2>
