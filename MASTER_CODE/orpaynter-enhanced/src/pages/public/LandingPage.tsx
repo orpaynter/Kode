@@ -183,8 +183,8 @@ const LandingPage: React.FC = () => {
               <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
               <div className="relative text-center">
                 <div className="bg-black/40 backdrop-blur-xl border border-white/20 p-6 rounded-xl shadow-2xl">
-                  <LayoutDashboard className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                  <p className="text-sm font-mono text-blue-300">INTELLIGENCE GRAPH LOADED</p>
+                  <img src="/logo.png" alt="Command Processor" className="h-24 w-24 mx-auto mb-4" />
+                  <p className="text-sm font-mono text-blue-300 text-center">COMMAND PROCESSOR ONLINE</p>
                 </div>
               </div>
             </div>
