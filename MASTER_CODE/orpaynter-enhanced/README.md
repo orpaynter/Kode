@@ -64,6 +64,7 @@ docker-compose -f docker-compose.prod.yml up --build -d
 *   [**Deployment Guide**](./docs/Deployment_Guide.md): Detailed steps for server setup and environment configuration.
 *   [**Project Showcase**](./docs/OrPaynter_Project_Showcase.md): High-level overview of the system's value proposition.
 *   [**Architecture Visualization**](./docs/presentation/index.html): Interactive HTML presentation of the system architecture.
+*   [**AI Overlay Demo**](http://localhost:5173/demo_host_app.html): Live simulation of the AI Overlay injection into a legacy CRM.
 
 ## 📱 Mobile Support
 

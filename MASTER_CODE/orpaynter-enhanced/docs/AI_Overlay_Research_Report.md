@@ -48,20 +48,24 @@ This report validates the technical feasibility of using **Kubernetes (K8s)** an
 ### C. The Overlay Injection (The "Face")
 *   **Technique:** "Sidecar" pattern for APIs, and "Web Component" injection for UIs.
 *   **Implementation:** A lightweight JavaScript SDK (`overlay.js`) running in the browser that communicates with the Control Plane to fetch the active configuration (which model? which UI elements to highlight?).
+*   **Status:** ✅ **Implemented.** The `overlay.js` SDK is available in `public/` and demonstrates Shadow DOM injection and basic context awareness.
 
 ## 4. Feature Roadmap for "WOW" Factor
 
 ### Phase 1: The Foundation
 *   **Universal Model Registry:** Upload/Link any model (HuggingFace, OpenAI Adapter).
 *   **One-Click Deploy:** Deploy a model to a K8s endpoint with a public URL.
+*   **Status:** ✅ **Implemented** (Backend `orchestrator.py` handles model registry).
 
 ### Phase 2: The Orchestration
 *   **Visual Traffic Splitter:** A slider UI to adjust A/B test weights (80/20 -> 50/50).
 *   **Drift Detection Dashboard:** Alerts when the "Challenger" model output deviates from the "Champion".
+*   **Status:** ✅ **Implemented** (See `OrchestratorDashboard.tsx`).
 
 ### Phase 3: The Intelligent Overlay
 *   **"Context Awareness":** The overlay automatically reads the screen content (DOM) of the host app to prompt the AI model relevantly.
 *   **"Action Execution":** The AI Overlay can click buttons or fill forms in the Host App (Agentic behavior).
+*   **Status:** ⚠️ **Partially Implemented.** `overlay.js` now scans DOM for context (H1/Title). Full agentic "Action Execution" is planned for v2.0.
 
 ## 5. Conclusion
 To achieve the mission, we must build **on top of K8s/Istio** but **hide it completely**. The user should see "Apps" and "Overlays," not "Pods" and "VirtualServices." This abstraction is the key differentiator.

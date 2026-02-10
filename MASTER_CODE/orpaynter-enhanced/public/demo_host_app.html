@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce CRM - Lead #1042</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        .navbar {
+            background-color: #0070d2;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 2rem;
+        }
+        .main-container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #ddd;
+            padding: 1rem;
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            max-width: 800px;
+            margin-bottom: 1rem;
+        }
+        .field-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+        .value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        h1 { margin-top: 0; }
+        
+        .simulation-banner {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ffeeba;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulation-banner">
+        ⚠️ <strong>DEMO ENVIRONMENT:</strong> This page simulates a legacy "Host App" (e.g., Salesforce). The AI Overlay (bottom right) is injected via <code>overlay.js</code>.
+    </div>
+
+    <div class="navbar">
+        <div class="logo">☁️ Salesforce CRM</div>
+        <div>Leads</div>
+        <div style="margin-left: 20px">Opportunities</div>
+        <div style="margin-left: 20px">Reports</div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <p>Home</p>
+            <p><strong>Leads</strong></p>
+            <p>Contacts</p>
+            <p>Accounts</p>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h1>Lead: John Smith Roofing Job</h1>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="field-group">
+                        <label>Status</label>
+                        <div class="value">New - Uncontacted</div>
+                    </div>
+                    <div class="field-group">
+                        <label>Lead Source</label>
+                        <div class="value">Web Inquiry</div>
+                    </div>
+                    <div class="field-group">
+                        <label>Email</label>
+                        <div class="value">john.smith@example.com</div>
+                    </div>
+                    <div class="field-group">
+                        <label>Phone</label>
+                        <div class="value">(555) 123-4567</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label>Description / Notes</label>
+                    <div class="value">Customer reports significant hail damage to shingles. Requesting urgent inspection. Roof is 15 years old.</div>
+                </div>
+            </div>
+            
+            <button onclick="document.querySelector('h1').innerText = 'Lead: Sarah Jones Siding'; document.title = 'Salesforce - Lead #1043'" style="padding: 10px 20px; cursor: pointer;">
+                Simulate Navigation (Change Record)
+            </button>
+        </div>
+    </div>
+
+    <!-- 
+      THE MAGIC:
+      This single script tag is all that's needed to "Overlay" the AI capabilities.
+      In a real deployment, this would be injected via a Chrome Extension or <script> tag.
+    -->
+    <script src="/overlay.js"></script>
+</body>
+</html>
