@@ -140,6 +140,17 @@ const LeadAdminDashboard: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={toggleSystemStatus}
+                className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  systemStatus === 'ACTIVE' 
+                    ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+                    : 'bg-red-100 text-red-800 hover:bg-red-200 animate-pulse'
+                }`}
+              >
+                <AlertTriangle className="h-4 w-4" />
+                <span>{systemStatus === 'ACTIVE' ? 'System Active' : 'LOCKDOWN ACTIVE'}</span>
+              </button>
               <span className="text-sm text-gray-600">Welcome, {adminUser?.full_name}</span>
               <button
                 onClick={handleLogout}

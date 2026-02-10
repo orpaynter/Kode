@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
-import { ArrowLeft, Upload, Camera, CheckCircle, AlertTriangle, Eye, Download, Clock, Shield } from 'lucide-react'
-import { supabase } from '../../lib/supabase'
+import { ArrowLeft, Upload, Camera, CheckCircle, AlertTriangle, Eye, Download, Clock, Shield, Ruler, Activity, CloudRain, Hammer } from 'lucide-react'
 import { formatCurrency } from '../../lib/utils'
 import toast from 'react-hot-toast'
 
@@ -16,6 +15,21 @@ interface AnalysisResult {
   priorityLevel: string
   description: string
   recommendations: string[]
+  technical_analysis?: {
+    impact_density: string
+    largest_impact_diameter: string
+    granule_loss_percentage: string
+    shingle_condition: string
+    estimated_roof_age: string
+    material_type: string
+    storm_match: string
+  }
+  financial_breakdown?: {
+    material_cost: number
+    labor_cost: number
+    waste_factor: string
+    regional_adjustment: string
+  }
 }
 
 interface Assessment {
@@ -42,13 +56,6 @@ const DamageAssessment: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisProgress, setAnalysisProgress] = useState(0)
   const [analysisStage, setAnalysisStage] = useState('')
-
-  useEffect(() => {
-    if (!leadId) {
-      toast.error('No lead ID provided. Redirecting to start.')
-      navigate('/')
-    }
-  }, [leadId, navigate])
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Filter for image files only
@@ -93,15 +100,22 @@ const DamageAssessment: React.FC = () => {
 
       const fileName = `${Date.now()}-${file.name}`
       
-      const { data, error } = await supabase.functions.invoke('ai-damage-assessment', {
-        body: {
+      // Use Python Backend
+      const response = await fetch('/api/ai-analysis/analyze-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           imageData: base64,
           fileName,
           leadId
-        }
+        })
       })
 
-      if (error) throw error
+      if (!response.ok) {
+        throw new Error('Analysis service unavailable')
+      }
+
+      const data = await response.json()
 
       setAnalysisProgress(75)
       setAnalysisStage('Processing results...')
@@ -113,7 +127,7 @@ const DamageAssessment: React.FC = () => {
       setAnalysisProgress(100)
       setAnalysisStage('Analysis complete!')
       
-      toast.success(`Analysis completed in ${data.processingTime} seconds!`)
+      toast.success(`Analysis completed in ${data.processing_time} seconds!`)
       
     } catch (error: any) {
       console.error('Analysis failed:', error)
@@ -130,6 +144,8 @@ const DamageAssessment: React.FC = () => {
   const handleContinueToResults = () => {
     if (leadId) {
       navigate(`/results/${leadId}`)
+    } else {
+        toast.success("Demo complete! In a real scenario, you'd be redirected to your dashboard.")
     }
   }
 
@@ -285,14 +301,6 @@ const DamageAssessment: React.FC = () => {
                   <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>Capture damage from multiple angles</span>
                 </li>
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Include close-up shots of specific damage</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Show overall roof condition for context</span>
-                </li>
               </ul>
             </div>
           </div>
@@ -300,7 +308,7 @@ const DamageAssessment: React.FC = () => {
           {/* Analysis Results */}
           <div className="space-y-6">
             {currentAnalysis ? (
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="bg-white rounded-xl shadow-lg p-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-gray-800">Analysis Results</h2>
                   <div className="flex items-center space-x-2">
@@ -310,6 +318,41 @@ const DamageAssessment: React.FC = () => {
                     </span>
                   </div>
                 </div>
+
+                {/* Technical Analysis Grid (10x Detail) */}
+                {currentAnalysis.ai_analysis_result.technical_analysis && (
+                  <div className="mb-8 bg-slate-50 border border-slate-200 rounded-xl p-5">
+                    <h3 className="flex items-center gap-2 font-bold text-slate-800 mb-4">
+                      <Ruler className="h-5 w-5 text-blue-600" />
+                      Technical Metrics
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-slate-500 text-xs uppercase tracking-wider">Impact Density</p>
+                        <p className="font-semibold text-slate-900">{currentAnalysis.ai_analysis_result.technical_analysis.impact_density}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-500 text-xs uppercase tracking-wider">Max Diameter</p>
+                        <p className="font-semibold text-slate-900">{currentAnalysis.ai_analysis_result.technical_analysis.largest_impact_diameter}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-500 text-xs uppercase tracking-wider">Granule Loss</p>
+                        <p className="font-semibold text-red-600">{currentAnalysis.ai_analysis_result.technical_analysis.granule_loss_percentage}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-500 text-xs uppercase tracking-wider">Est. Age</p>
+                        <p className="font-semibold text-slate-900">{currentAnalysis.ai_analysis_result.technical_analysis.estimated_roof_age}</p>
+                      </div>
+                      <div className="col-span-2 border-t pt-2 mt-2">
+                        <p className="text-slate-500 text-xs uppercase tracking-wider">NOAA Storm Match</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <CloudRain className="h-4 w-4 text-blue-500" />
+                          <p className="font-bold text-blue-900">{currentAnalysis.ai_analysis_result.technical_analysis.storm_match}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Confidence Score */}
                 <div className="mb-6">
@@ -342,18 +385,35 @@ const DamageAssessment: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Cost Estimate */}
-                <div className="mb-6">
-                  <h3 className="font-semibold text-gray-800 mb-3">Cost Estimate</h3>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-gray-800">
-                        {formatCurrency(currentAnalysis.estimated_cost_min)} - {formatCurrency(currentAnalysis.estimated_cost_max)}
-                      </p>
-                      <p className="text-sm text-gray-600 mt-1">Estimated repair cost range</p>
+                {/* Financial Breakdown (10x Detail) */}
+                {currentAnalysis.ai_analysis_result.financial_breakdown && (
+                  <div className="mb-6 border border-green-200 bg-green-50 rounded-xl p-5">
+                    <h3 className="flex items-center gap-2 font-bold text-green-900 mb-4">
+                      <Hammer className="h-5 w-5 text-green-600" />
+                      Cost Estimation
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-green-800">Material Cost</span>
+                        <span className="font-semibold">{formatCurrency(currentAnalysis.ai_analysis_result.financial_breakdown.material_cost)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-green-800">Labor Cost</span>
+                        <span className="font-semibold">{formatCurrency(currentAnalysis.ai_analysis_result.financial_breakdown.labor_cost)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm border-b border-green-200 pb-2">
+                        <span className="text-green-800">Waste Factor ({currentAnalysis.ai_analysis_result.financial_breakdown.waste_factor})</span>
+                        <span className="text-green-600 italic">Included</span>
+                      </div>
+                      <div className="flex justify-between text-lg font-bold pt-1">
+                        <span className="text-green-900">Total Estimate</span>
+                        <span className="text-green-900">
+                          {formatCurrency(currentAnalysis.estimated_cost_min)} - {formatCurrency(currentAnalysis.estimated_cost_max)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Insurance Probability */}
                 <div className="mb-6">

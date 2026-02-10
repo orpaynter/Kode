@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Frontend Service (Nginx + React Build)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - orpaynter-net
+
+  # Backend Service (Flask + Gunicorn)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///orpaynter.db}
+    restart: always
+    networks:
+      - orpaynter-net
+
+networks:
+  orpaynter-net:
+    driver: bridge

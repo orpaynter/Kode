@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# OrPaynter Enhanced
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**OrPaynter Enhanced** is a next-generation roofing platform that integrates advanced **AI Orchestration**, **Offline-First** capabilities, and **Cross-Platform** support. It is designed to manage complex AI overlays for business logic while ensuring robust performance across diverse hardware and network conditions.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **AI Orchestrator Dashboard**: A centralized control plane for multi-model traffic splitting, A/B testing, and real-time performance monitoring.
+*   **Offline-First Architecture**: Integrated **PowerSync** to ensure seamless data synchronization and full functionality even without internet connectivity.
+*   **Hardware-Aware Backend**: Intelligent backend (Python/Flask) that automatically detects and optimizes for **CUDA (NVIDIA)**, **MPS (Apple Silicon)**, or CPU execution.
+*   **Cross-Platform & Mobile**: Fully configured as a **Progressive Web App (PWA)** and wrapped with **Capacitor** for native iOS and Android deployment.
+*   **Production-Ready Deployment**: Includes a complete **Docker** orchestration suite with **Nginx** reverse proxy for secure, scalable hosting.
+*   **Commercial-Grade Distribution**: Built-in licensing and secure software distribution workflows.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+*   **Frontend**: React, TypeScript, Vite, Tailwind CSS, Framer Motion
+*   **Backend**: Python, Flask, Gunicorn
+*   **Database & Sync**: Supabase, PowerSync (SQLite)
+*   **Infrastructure**: Docker, Docker Compose, Nginx
+*   **Mobile**: Capacitor, PWA
 
-- Configure the top-level `parserOptions` property like this:
+## 📦 Installation & Deployment
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+*   Node.js (v18+)
+*   Python (3.9+)
+*   Docker & Docker Compose
+
+### Quick Start (Development)
+
+1.  **Install Dependencies**:
+    ```bash
+    npm install
+    cd backend && pip install -r requirements.txt && cd ..
+    ```
+
+2.  **Run Locally**:
+    ```bash
+    npm run dev
+    # In a separate terminal:
+    npm run server
+    ```
+
+### Production Deployment
+
+We provide automated scripts for one-click production builds:
+
+*   **Windows**:
+    ```powershell
+    .\deploy.bat
+    ```
+*   **Linux/macOS**:
+    ```bash
+    ./deploy.sh
+    ```
+
+For manual Docker deployment:
+```bash
+docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 📂 Documentation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+*   [**Deployment Guide**](./docs/Deployment_Guide.md): Detailed steps for server setup and environment configuration.
+*   [**Project Showcase**](./docs/OrPaynter_Project_Showcase.md): High-level overview of the system's value proposition.
+*   [**Architecture Visualization**](./docs/presentation/index.html): Interactive HTML presentation of the system architecture.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## 📱 Mobile Support
+
+The application is PWA-ready. To build for mobile:
+
+```bash
+npm run build
+npx cap sync
+npx cap open android  # or ios
 ```
+
+---
+*Built for the OrPaynter Ecosystem.*

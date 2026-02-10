@@ -1,5 +1,5 @@
 import React from 'react'
-import { Home, ClipboardCheck, Calendar, MessageSquare, Tool } from 'lucide-react'
+import { Home, ClipboardCheck, Calendar, MessageSquare } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 
 const HomeownerDashboard: React.FC = () => {

@@ -23,6 +23,7 @@ import LandingPage from './pages/public/LandingPage'
 import ChatbotFlow from './pages/public/ChatbotFlow'
 import DamageAssessment from './pages/public/DamageAssessment'
 import ResultsDashboard from './pages/public/ResultsDashboard'
+import DownloadPage from './pages/public/DownloadPage'
 
 // Role-Specific Dashboards
 import SupplierDashboard from './pages/supplier/SupplierDashboard'
@@ -32,6 +33,7 @@ import HomeownerDashboard from './pages/homeowner/HomeownerDashboard'
 // Admin Pages
 import LeadAdminLogin from './pages/admin/LeadAdminLogin'
 import LeadAdminDashboard from './pages/admin/LeadAdminDashboard'
+import { OrchestratorDashboard } from './pages/orchestrator/OrchestratorDashboard'
 
 import './globals.css'
 
@@ -57,10 +59,14 @@ function App() {
                 <Route path="/chatbot" element={<ChatbotFlow />} />
                 <Route path="/assessment" element={<DamageAssessment />} />
                 <Route path="/results/:leadId" element={<ResultsDashboard />} />
+                <Route path="/download" element={<DownloadPage />} />
 
                 {/* Lead Admin Routes */}
                 <Route path="/admin/login" element={<LeadAdminLogin />} />
                 <Route path="/admin/dashboard" element={<LeadAdminDashboard />} />
+                
+                {/* AI Orchestrator Control Plane */}
+                <Route path="/orchestrator" element={<OrchestratorDashboard />} />
 
                 {/* Auth routes for App */}
                 <Route path="/login" element={<LoginPage />} />
@@ -185,7 +191,6 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </div>
-          </Router>
           <Toaster
             position="top-right"
             toastOptions={{
@@ -197,6 +202,8 @@ function App() {
               },
             }}
           />
+          </Router>
+          </PowerSyncProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>

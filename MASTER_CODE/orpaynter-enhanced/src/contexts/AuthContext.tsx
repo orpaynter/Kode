@@ -63,7 +63,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setProfile(null)
         }
       } catch (error) {
-        console.error('Error loading user:', error)
+        const authError = error as AuthError
+        // Suppress "Auth session missing" error as it is expected for unauthenticated users
+        if (authError.message === 'Auth session missing!' || authError.name === 'AuthSessionMissingError') {
+          console.debug('No active session found (Guest user)')
+        } else {
+          console.error('Error loading user:', error)
+        }
         setUser(null)
         setProfile(null)
         setSession(null)
