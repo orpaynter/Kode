@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
+import { PowerSyncProvider } from './contexts/PowerSyncContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { RoleRoute } from './components/RoleRoute'
 import { LoginPage } from './pages/auth/LoginPage'
@@ -51,6 +52,7 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
+          <PowerSyncProvider>
           <Router>
             <div className="min-h-screen bg-slate-50">
               <Routes>

@@ -31,6 +31,16 @@ const LeadAdminDashboard: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('all')
   const [isLoading, setIsLoading] = useState(true)
   const [adminUser, setAdminUser] = useState<any>(null)
+  const [systemStatus, setSystemStatus] = useState<'ACTIVE' | 'LOCKDOWN'>('ACTIVE')
+  
+  const toggleSystemStatus = () => {
+    setSystemStatus(prev => prev === 'ACTIVE' ? 'LOCKDOWN' : 'ACTIVE')
+    if (systemStatus === 'ACTIVE') {
+      toast.error('SYSTEM LOCKDOWN INITIATED')
+    } else {
+      toast.success('System Restored')
+    }
+  }
 
   useEffect(() => {
     // Check authentication

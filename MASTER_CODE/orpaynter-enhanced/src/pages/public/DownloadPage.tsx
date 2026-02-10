@@ -1,4 +1,4 @@
-1import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, ShieldCheck, Server, AlertTriangle, FileArchive, CheckCircle, CreditCard, Lock } from 'lucide-react'
 import { Navbar } from '../../components/layout/Navbar'
