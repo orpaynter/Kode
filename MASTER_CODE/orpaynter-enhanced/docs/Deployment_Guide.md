@@ -9,7 +9,7 @@ We have successfully compiled the production build of the OrPaynter frontend.
 
 ### Release Integrity
 To ensure security, all releases are signed with a SHA-256 checksum.
-*   **Current Release Hash:** `94cf482b9049e03e926f05abb6f065ac20cc4091b941ebbcbef3378909291d4d`
+*   **Current Release Hash:** `E09BFD469EC84562961A112F709D2B6F83180942623909A04B102FF9ADD31CC4`
 
 ## 2. Hosting Strategy
 For high availability and global distribution, we recommend the following tiered hosting strategy:
