@@ -16,18 +16,78 @@ orchestrator.register_routes(app)
 # Register Commerce Routes
 commerce.register_routes(app)
 
-# Mock storage for leads
-leads_db = []
+import sqlite3
+import os
+
+# Initialize Database
+DB_PATH = 'backend/leads.db'
+
+def init_db():
+    if not os.path.exists('backend'):
+        os.makedirs('backend')
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS leads (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            email TEXT,
+            role TEXT,
+            company_stage TEXT,
+            tools TEXT,
+            chaos_point TEXT,
+            timestamp TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route('/api/early-access', methods=['POST'])
 def early_access():
     data = request.json
-    data['id'] = str(uuid.uuid4())
-    data['timestamp'] = datetime.now().isoformat()
-    leads_db.append(data)
-    # In a real app, we would save to DB or send email here
-    print(f"New Lead Captured: {data}")
-    return jsonify({'message': 'Application received', 'status': 'success', 'waitlist_position': len(leads_db) + 142}), 201
+    
+    # Basic Validation
+    if not data or 'email' not in data:
+        return jsonify({'error': 'Email is required'}), 400
+        
+    lead_id = str(uuid.uuid4())
+    timestamp = datetime.now().isoformat()
+    
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute('''
+            INSERT INTO leads (id, name, email, role, company_stage, tools, chaos_point, timestamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            lead_id,
+            data.get('name', ''),
+            data.get('email', ''),
+            data.get('role', ''),
+            data.get('companyStage', ''), # Frontend uses camelCase
+            data.get('tools', ''),
+            data.get('chaosPoint', ''),
+            timestamp
+        ))
+        conn.commit()
+        
+        # Get waitlist position (count of leads)
+        c.execute('SELECT COUNT(*) FROM leads')
+        count = c.fetchone()[0]
+        conn.close()
+        
+        print(f"New Lead Captured: {data['email']}")
+        return jsonify({
+            'message': 'Application received', 
+            'status': 'success', 
+            'waitlist_position': count + 142
+        }), 201
+        
+    except Exception as e:
+        print(f"Database Error: {e}")
+        return jsonify({'error': 'Failed to save application'}), 500
 
 @app.route('/api/ai-analysis/analyze-image', methods=['POST'])
 def analyze_image():
