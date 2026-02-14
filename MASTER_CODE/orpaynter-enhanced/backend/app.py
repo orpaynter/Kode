@@ -8,6 +8,10 @@ import orchestrator
 import commerce
 import oprev
 import audit_logger
+import super_nexus
+import opsec
+import opclaims
+import _0oO
 
 app = Flask(__name__)
 CORS(app)
@@ -17,6 +21,18 @@ oprev.register_oprev_routes(app)
 
 # Register Audit Routes (Compliance Logging)
 audit_logger.register_audit_routes(app)
+
+# Register SUPER NEXUS Routes (Agent Control Plane)
+super_nexus.register_nexus_routes(app)
+
+# Register OPSEC Routes (Security Overlay)
+opsec.register_opsec_routes(app)
+
+# Register OPCLAIMS Routes (Insurance Automation)
+opclaims.register_opclaims_routes(app)
+
+# Register 0oO Unified Gateway Routes
+_0oO.register_0oO_routes(app)
 
 # Register Orchestrator Routes
 orchestrator.register_routes(app)
