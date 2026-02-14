@@ -6,9 +6,17 @@ import uuid
 from datetime import datetime
 import orchestrator
 import commerce
+import oprev
+import audit_logger
 
 app = Flask(__name__)
 CORS(app)
+
+# Register OPREV Routes (Revenue Twin - AI SDR)
+oprev.register_oprev_routes(app)
+
+# Register Audit Routes (Compliance Logging)
+audit_logger.register_audit_routes(app)
 
 # Register Orchestrator Routes
 orchestrator.register_routes(app)
