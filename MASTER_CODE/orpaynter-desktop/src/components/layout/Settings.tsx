@@ -18,7 +18,7 @@ const Settings = () => {
     if (!user.name) {
       setUser({
         name: 'Demo User',
-        email: 'demo@orpaynter.com',
+        email: 'Oliver@orpaynter.com',
         licenseType: 'professional',
         isAuthenticated: true
       })

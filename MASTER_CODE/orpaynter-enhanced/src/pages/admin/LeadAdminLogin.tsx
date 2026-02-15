@@ -80,7 +80,7 @@ const LeadAdminLogin: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="admin@orpaynter.com"
+                placeholder="Oliver@orpaynter.com"
                 disabled={isLoading}
               />
             </div>
@@ -129,8 +129,8 @@ const LeadAdminLogin: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-gray-200 text-center">
             <div className="bg-blue-50 p-4 rounded-lg">
               <p className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials</p>
-              <p className="text-sm text-blue-700">Email: admin@orpaynter.com</p>
-              <p className="text-sm text-blue-700">Password: OrPaynter2025!</p>
+              <p className="text-sm text-blue-700">Email: Oliver@orpaynter.com</p>
+              <p className="text-sm text-blue-700">Password: Admin</p>
             </div>
             <p className="text-sm text-gray-500 mt-4">
               Secure admin access to manage leads and system analytics
