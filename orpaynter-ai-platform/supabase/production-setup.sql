@@ -314,7 +314,7 @@ CREATE TRIGGER audit_payments AFTER INSERT OR UPDATE OR DELETE ON payments
 
 -- Insert sample data for testing (remove in production)
 -- INSERT INTO users (id, email, full_name, role) VALUES 
--- ('00000000-0000-0000-0000-000000000001', 'admin@orpaynter.com', 'Admin User', 'admin'),
+-- ('00000000-0000-0000-0000-000000000001', 'Oliver@orpaynter.com', 'Admin User', 'admin'),
 -- ('00000000-0000-0000-0000-000000000002', 'contractor@orpaynter.com', 'Test Contractor', 'contractor'),
 -- ('00000000-0000-0000-0000-000000000003', 'homeowner@orpaynter.com', 'Test Homeowner', 'homeowner');
 
