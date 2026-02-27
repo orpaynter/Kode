@@ -6,7 +6,24 @@ import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 // https://vite.dev/config/
 export default defineConfig({
   build: {
+    target: 'esnext',
     sourcemap: 'hidden',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+        },
+      },
+    },
   },
   plugins: [
     react({
